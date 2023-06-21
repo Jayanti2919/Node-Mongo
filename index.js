@@ -22,6 +22,17 @@ app.post('/add', async(req, res)=>{
     }
 })
 
+app.post('/find', async(req, res)=> {
+    try{
+        const rec = await Record.findOne({id: req.body.id})
+        if(!rec) res.send("Does not exist")
+        else res.send(rec)
+    } catch(error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
 const CONNECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
