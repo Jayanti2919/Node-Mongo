@@ -33,6 +33,21 @@ app.post('/find', async(req, res)=> {
     }
 })
 
+app.post('/update', async(req, res) => {
+    try{
+        const rec = await Record.findOne({id: req.body.id})
+        if(!rec) res.send("Not found")
+        else {
+            rec.name = req.body.name
+            const updated = await rec.save()
+            res.send("Updated")
+        }
+    } catch(error) {
+        console.log(error)
+        res.send("Error")
+    }
+})
+
 const CONNECTION_URL = process.env.MONGO_URI;
 const PORT = process.env.PORT || 5000;
 
